@@ -39,6 +39,8 @@ function isCollide(snake) {
     if (snake[0].x >= 18 || snake[0].x <= 0 || snake[0].y >= 18 || snake[0].y <= 0) {
         return true;
     }
+
+    return false;
 }
 
 
@@ -51,11 +53,11 @@ function startGame() {
 function gameEngine() {
     // Updating the snake array and food
     if (isCollide(snakeArr)) {
+        text.innerHTML = "Game Over, Press Enter key to play again";
         gameOverSound.play();
         musicSound.pause();
         inputDir = { x: 0, y: 0 };
         isGameStarted = false;
-        text.innerHTML = "Game Over, Press Enter key to play again";
         snakeArr = [{ x: 13, y: 15 }];
         musicSound.play();
         score = 0;
@@ -134,30 +136,39 @@ else {
 }
 window.requestAnimationFrame(main);
 window.addEventListener('keydown', e => {
-    inputDir = { x: 0, y: 0 } // Start the game
     moveSound.play();
 
     if (isGameStarted) {
         // Handle movement controls if the game is running
+        let newDir = { x: 0, y: 0 };
+
         switch (e.key) {
             case "ArrowUp":
-                inputDir.x = 0;
-                inputDir.y = -1;
+                newDir.x = 0;
+                newDir.y = -1;
                 break;
             case "ArrowDown":
-                inputDir.x = 0;
-                inputDir.y = 1;
+                newDir.x = 0;
+                newDir.y = 1;
                 break;
             case "ArrowLeft":
-                inputDir.x = -1;
-                inputDir.y = 0;
+                newDir.x = -1;
+                newDir.y = 0;
                 break;
             case "ArrowRight":
-                inputDir.x = 1;
-                inputDir.y = 0;
+                newDir.x = 1;
+                newDir.y = 0;
                 break;
             default:
                 break;
+        }
+
+        if (newDir.x !== -inputDir.x || newDir.y !== -inputDir.y) {
+            console.log(newDir.x , -inputDir.x);
+            inputDir = newDir;
+        }
+        else{
+            console.log("hello");
         }
 
     } else {
@@ -168,3 +179,49 @@ window.addEventListener('keydown', e => {
         }
     }
 })
+
+
+// for mobile device 
+function handleButtonClick(direction) {
+    if (isGameStarted) {
+        let newDir = { x: 0, y: 0 };
+        switch (direction) {
+            case "up":
+                newDir.x = 0;
+                newDir.y = -1;
+                break;
+            case "down":
+                newDir.x = 0;
+                newDir.y = 1;
+                break;
+            case "left":
+                newDir.x = -1;
+                newDir.y = 0;
+                break;
+            case "right":
+                newDir.x = 1;
+                newDir.y = 0;
+                break;
+            default:
+                break;
+        }
+
+        if (newDir.x !== -inputDir.x || newDir.y !== -inputDir.y) {
+            inputDir = newDir;
+        }
+    }
+}
+
+
+// Add click event listeners to the arrow buttons
+const btnUp = document.getElementById("btn-up");
+const btnDown = document.getElementById("btn-down");
+const btnLeft = document.getElementById("btn-left");
+const btnRight = document.getElementById("btn-right");
+
+btnUp.addEventListener('click', () => handleButtonClick("up"));
+btnDown.addEventListener('click', () => handleButtonClick("down"));
+btnLeft.addEventListener('click', () => handleButtonClick("left"));
+btnRight.addEventListener('click', () => handleButtonClick("right"));
+
+

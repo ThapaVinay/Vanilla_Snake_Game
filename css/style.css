@@ -1,11 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=New+Tegomin&display=swap');
 
-*{
-    padding:0;
-    margin:0;
+* {
+    padding: 0;
+    margin: 0;
 }
 
-.body{
+.body {
     background: url('../img/bg.jpg');
     min-height: 100vh;
     background-size: 100vw 100vh;
@@ -15,8 +15,8 @@
     align-items: center;
 }
 
-.board{
-    background: linear-gradient(rgb(170,236,170), rgb(236,236,167));
+.board {
+    background: linear-gradient(rgb(170, 236, 170), rgb(236, 236, 167));
     width: 90vmin;
     height: 92vmin;
     border: 2px solid black;
@@ -25,26 +25,26 @@
     grid-template-rows: repeat(18, 1fr);
 }
 
-.head{
+.head {
     background: linear-gradient(rgb(240, 110, 110), rgb(236, 236, 103));
     border: 2px solid rgb(34, 32, 34);
     transform: scale(1.02);
     border-radius: 10px;
 }
 
-.snake{
+.snake {
     background-color: purple;
     border: .25vmin solid white;
     border-radius: 12px;
 }
 
-.food{
+.food {
     background: linear-gradient(red, purple);
     border: .25vmin solid white;
     border-radius: 8px;
 }
 
-#scoreBox{
+#scoreBox {
     position: absolute;
     top: 9px;
     right: 200px;
@@ -53,7 +53,7 @@
     font-family: 'New Tegomin', serif;
 }
 
-#highScoreBox{
+#highScoreBox {
     position: absolute;
     top: 60px;
     right: 140px;
@@ -62,7 +62,31 @@
     font-family: 'New Tegomin', serif;
 }
 
-#text{
+.keys {
+    position: absolute;
+    top: 400px;
+    left: 10px;
+    text-align: center;
+    font-family: 'New Tegomin', serif;
+    margin: auto;
+}
+
+.arrow {
+    cursor: pointer;
+    width: 90px;
+    height: 90px;
+    text-align: center;
+    line-height: 90px;
+    background: linear-gradient(rgb(240, 110, 110), rgb(236, 236, 103));
+    color: rgb(34, 32, 32);
+    font-size: 40px;
+    border: 2px solid grey;
+    border-radius: 25px;
+    display: inline-block;
+    margin: 5px;
+}
+
+#text {
     position: absolute;
     display: flex;
     flex-direction: column;
@@ -70,4 +94,32 @@
     font-size: 25px;
     font-weight: bold;
     font-family: 'New Tegomin', serif;
+}
+
+@media only screen and (max-width: 600px) {
+    .body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    #text{
+        margin-top: 120px;
+    }
+
+    .board {
+        position: relative ;
+        margin-top: 50px;
+    }
+
+    .keys {
+        position: relative;
+        margin-top: -350px;
+
+    }
+
+    #text {
+        position: relative;
+
+    }
 }
