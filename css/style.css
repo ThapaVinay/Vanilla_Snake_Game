@@ -9,7 +9,6 @@
     background: url('../img/bg.jpg');
     min-height: 100vh;
     background-size: 100vw 100vh;
-    background-repeat: no-repeat;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -64,7 +63,7 @@
 
 .keys {
     position: absolute;
-    top: 400px;
+    top: 380px;
     left: 20px;
     text-align: center;
     font-family: 'New Tegomin', serif;
@@ -84,6 +83,18 @@
     border-radius: 25px;
     display: inline-block;
     margin: 5px;
+}
+
+#enter {
+    cursor: pointer;
+    background: linear-gradient(rgb(240, 110, 110), rgb(236, 236, 103));
+    color: rgb(34, 32, 32);
+    font-size: 30px;
+    border: 2px solid grey;
+    border-radius: 15px;
+    display: inline-block;
+    padding: 12px;
+    margin-bottom: 10px;
 }
 
 #text {

@@ -167,9 +167,6 @@ window.addEventListener('keydown', e => {
             console.log(newDir.x , -inputDir.x);
             inputDir = newDir;
         }
-        else{
-            console.log("hello");
-        }
 
     } else {
         if (e.key === "Enter") {
@@ -210,6 +207,13 @@ function handleButtonClick(direction) {
             inputDir = newDir;
         }
     }
+    else {
+        if (direction === "enter") {
+            startGame();
+            text.innerHTML = "";
+            window.requestAnimationFrame(main);
+        }
+    }
 }
 
 
@@ -223,5 +227,6 @@ btnUp.addEventListener('click', () => handleButtonClick("up"));
 btnDown.addEventListener('click', () => handleButtonClick("down"));
 btnLeft.addEventListener('click', () => handleButtonClick("left"));
 btnRight.addEventListener('click', () => handleButtonClick("right"));
+enter.addEventListener('click', () => handleButtonClick("enter"));
 
 
