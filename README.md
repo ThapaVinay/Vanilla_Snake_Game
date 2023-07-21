@@ -1,6 +1,8 @@
 
 Snake Game 🐍
 
+![SnakeGame](sample.png)
+
 Overview:
 Welcome to the classic Snake Game! This repository contains a simple and addictive implementation of the classic Snake Game using vanilla JavaScript, HTML, and CSS. The game provides a nostalgic experience for players of all ages, where they control the snake to eat food and grow longer while avoiding collisions with the walls or its own tail.
 
