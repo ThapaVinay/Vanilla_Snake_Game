@@ -5,7 +5,8 @@ const gameOverSound = new Audio('../music/gameover.mp3');
 const moveSound = new Audio('../music/move.mp3');
 const musicSound = new Audio('../music/music.mp3');
 let speed = 5;
-let score = 2;
+let score = 0;
+let isGameStarted = false;
 let lastPaintTime = 0;
 let snakeArr = [
     { x: 13, y: 15 }
@@ -21,6 +22,7 @@ function main(ctime) {
         return;
     }
     lastPaintTime = ctime;
+
     gameEngine();
 }
 
@@ -39,13 +41,21 @@ function isCollide(snake) {
     }
 }
 
+
+function startGame() {
+    isGameStarted = true;
+    moveSound.play();
+    musicSound.play();
+}
+
 function gameEngine() {
     // Updating the snake array and food
     if (isCollide(snakeArr)) {
         gameOverSound.play();
         musicSound.pause();
         inputDir = { x: 0, y: 0 };
-        alert("Game Over, Press any key to play again");
+        isGameStarted = false;
+        text.innerHTML = "Game Over, Press Enter key to play again";
         snakeArr = [{ x: 13, y: 15 }];
         musicSound.play();
         score = 0;
@@ -55,6 +65,13 @@ function gameEngine() {
     // If food is eaten, increment the score and regenerate the food
     if (snakeArr[0].y === food.y && snakeArr[0].x === food.x) {
         foodSound.play();
+        score += 1;
+        if (score > hiScoreVal) {
+            hiScoreVal = score;
+            localStorage.setItem('hiscore', JSON.stringify(hiScoreVal));
+            highScoreBox.innerHTML = "High Score: " + hiScoreVal;
+        }
+        scoreBox.innerHTML = "Score:" + score;
         snakeArr.unshift({ x: snakeArr[0].x + inputDir.x, y: snakeArr[0].y + inputDir.y });
         let a = 2;
         let b = 16;
@@ -105,40 +122,49 @@ function gameEngine() {
 
 
 
-
-
 // Main logic 
+let hiScore = localStorage.getItem('hiScore');
+if (hiScore == null) {
+    var hiScoreVal = 0;
+    localStorage.setItem('hiScore', JSON.stringify(hiScoreVal));
+}
+else {
+    hiScoreVal = JSON.parse(hiScore);
+    highScoreBox.innerHTML = "High Score: " + hiScoreVal;
+}
 window.requestAnimationFrame(main);
 window.addEventListener('keydown', e => {
-    inputDir = { x: 0, y: 1 } // Start the game
+    inputDir = { x: 0, y: 0 } // Start the game
     moveSound.play();
 
-    switch (e.key) {
-        case "ArrowUp":
-            console.log("ArrowUp");
-            inputDir.x = 0;
-            inputDir.y = -1;
-            break;
+    if (isGameStarted) {
+        // Handle movement controls if the game is running
+        switch (e.key) {
+            case "ArrowUp":
+                inputDir.x = 0;
+                inputDir.y = -1;
+                break;
+            case "ArrowDown":
+                inputDir.x = 0;
+                inputDir.y = 1;
+                break;
+            case "ArrowLeft":
+                inputDir.x = -1;
+                inputDir.y = 0;
+                break;
+            case "ArrowRight":
+                inputDir.x = 1;
+                inputDir.y = 0;
+                break;
+            default:
+                break;
+        }
 
-        case "ArrowDown":
-            console.log("ArrowDown");
-            inputDir.x = 0;
-            inputDir.y = 1;
-            break;
-
-        case "ArrowLeft":
-            console.log("ArrowLeft");
-            inputDir.x = -1;
-            inputDir.y = 0;
-            break;
-
-        case "ArrowRight":
-            console.log("ArrowRight");
-            inputDir.x = 1;
-            inputDir.y = 0;
-            break;
-
-        default:
-            break;
+    } else {
+        if (e.key === "Enter") {
+            startGame();
+            text.innerHTML = "";
+            window.requestAnimationFrame(main);
+        }
     }
 })
